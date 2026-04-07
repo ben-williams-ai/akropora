@@ -65,5 +65,5 @@ When the local version looks good, commit and push the changes. GitHub Pages sho
 - Replace placeholder demo links with live Gaussian splat and video demo URLs.
 - Add the missing video for the `Inject human input` demo.
 - Replace temporary demo card images with real preview images or posters.
-- Verify the `$40bn+` environmental consulting market-size line before launch and replace it if a better source is found. Current working source: Research and Markets via Yahoo Finance estimated the market at `$38.4bn` in 2023 and `$65.1bn` by 2030: `https://uk.finance.yahoo.com/news/environmental-consulting-services-global-strategic-103400752.html`
+- Add in calendly link to book meetings
 - Keep the HTML5 UP attribution unless the template licence is changed or replaced. The current Alpha template is CC BY 3.0, which requires attribution.

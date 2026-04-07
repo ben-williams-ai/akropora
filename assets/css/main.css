@@ -3899,12 +3899,37 @@
 
 /* Akropora customisations */
 
+	:root {
+		--akro-page: #e7e7e2;
+		--akro-panel: #f7f7f3;
+		--akro-panel-soft: #eeeeea;
+		--akro-ink: #202224;
+		--akro-copy: #4f5653;
+		--akro-muted: #68706c;
+		--akro-line: #d1d1ca;
+		--akro-charcoal: #202422;
+		--akro-deep-green: #1b2a25;
+		--akro-moss: #64766a;
+		--akro-sage: #c7d1c6;
+		--akro-warm: #c98368;
+	}
+
 	html {
 		scroll-behavior: smooth;
 	}
 
+	body {
+		background: var(--akro-page);
+	}
+
 	body, input, select, textarea {
+		color: var(--akro-copy);
 		font-size: 17pt;
+	}
+
+	h1, h2, h3, h4, h5, h6,
+	strong, b {
+		color: var(--akro-ink);
 	}
 
 	#banner {
@@ -3920,6 +3945,12 @@
 	body.landing #main {
 		margin-top: 0;
 		padding-top: 2em;
+	}
+
+	#main > .box,
+	.box {
+		background: var(--akro-panel);
+		color: var(--akro-copy);
 	}
 
 	#banner .hero-inner {
@@ -3959,6 +3990,7 @@
 	#demos h2,
 	.akro-service-content h2,
 	.akro-coming-soon h2 {
+		color: var(--akro-ink);
 		font-weight: 700;
 	}
 
@@ -4179,7 +4211,9 @@
 	}
 
 	.akro-intro {
+		background: var(--akro-panel);
 		box-sizing: border-box;
+		box-shadow: 0 2px 0 0 rgba(32, 34, 36, 0.08), 0 1.6em 3.2em rgba(32, 34, 36, 0.08);
 		margin-left: auto;
 		margin-right: auto;
 		max-width: 100%;
@@ -4215,12 +4249,12 @@
 	}
 
 	.akro-intro-grid article:first-child {
-		border-right: solid 2px #e5e5e5;
+		border-right: solid 2px var(--akro-line);
 	}
 
 	.akro-intro-grid h3 {
-		color: #646464;
-		font-size: 0.9em;
+		color: var(--akro-warm);
+		font-size: 0.94em;
 		font-weight: 700;
 		letter-spacing: 0.12em;
 		margin: 0 0 1.25em 0;
@@ -4241,13 +4275,32 @@
 		line-height: 1.75em;
 	}
 
+	.akro-intro p,
+	.akro-demo-content p,
+	.akro-method p,
+	.akro-mini-grid p {
+		color: var(--akro-copy);
+	}
+
 	.akro-section {
 		padding: 2em 0 4em 0;
+	}
+
+	.akro-method {
+		padding-bottom: 1.75em;
+	}
+
+	.akro-coming-soon {
+		padding-top: 0.75em;
 	}
 
 	.akro-section > header.major {
 		margin-bottom: 2.5em;
 		text-align: center;
+	}
+
+	.akro-section > header.major p {
+		color: var(--akro-muted);
 	}
 
 	.akro-demo-grid {
@@ -4257,9 +4310,10 @@
 	}
 
 	.akro-demo-card {
-		background: #fff;
+		background: var(--akro-panel);
+		border: solid 1px var(--akro-line);
 		border-radius: 6px;
-		box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.065);
+		box-shadow: 0 0.9em 2em rgba(32, 34, 36, 0.06);
 		overflow: hidden;
 	}
 
@@ -4281,7 +4335,9 @@
 	}
 
 	.akro-demo-content h3 {
-		font-size: 1.35em;
+		font-size: 1.55em;
+		font-weight: 300;
+		line-height: 1.35em;
 		margin-bottom: 0.65em;
 	}
 
@@ -4290,7 +4346,7 @@
 	}
 
 	.akro-label {
-		color: #e89980;
+		color: var(--akro-moss);
 		font-size: 0.86em;
 		font-weight: 700;
 		letter-spacing: 0.1em;
@@ -4300,9 +4356,14 @@
 
 	.akro-card-link {
 		border-bottom: 0;
-		color: #e89980;
+		color: var(--akro-deep-green);
 		font-size: 1.05em;
 		font-weight: 700;
+	}
+
+	.akro-demo-content .akro-label {
+		color: var(--akro-warm);
+		font-size: 0.86em;
 	}
 
 	.akro-card-link:after {
@@ -4310,13 +4371,13 @@
 	}
 
 	.akro-video-card {
-		background: #222;
+		background: var(--akro-charcoal);
 	}
 
 	.akro-placeholder-media {
 		align-items: center;
 		aspect-ratio: 16 / 10;
-		background: linear-gradient(135deg, #333, #555);
+		background: linear-gradient(135deg, var(--akro-charcoal), var(--akro-moss));
 		color: rgba(255, 255, 255, 0.8);
 		display: flex;
 		justify-content: center;
@@ -4352,6 +4413,7 @@
 
 	.akro-service-list li:before {
 		content: "→";
+		color: var(--akro-moss);
 		font-weight: 700;
 		left: 0;
 		position: absolute;
@@ -4364,9 +4426,10 @@
 	}
 
 	.akro-mini-grid article {
-		background: #fff;
+		background: var(--akro-panel);
+		border: solid 1px var(--akro-line);
 		border-radius: 6px;
-		box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.065);
+		box-shadow: 0 0.9em 2em rgba(32, 34, 36, 0.06);
 		padding: 2em;
 	}
 
@@ -4375,18 +4438,23 @@
 	}
 
 	.akro-partner {
-		background: #13231f;
-		color: rgba(255, 255, 255, 0.78);
+		background: var(--akro-charcoal);
+		color: var(--akro-panel);
 		padding: 5em 2em;
 		text-align: center;
 	}
 
+	.akro-partner p,
+	.akro-partner-list li {
+		color: var(--akro-panel);
+	}
+
 	.akro-partner h2 {
-		color: #fff;
+		color: var(--akro-panel);
 	}
 
 	.akro-partner a {
-		color: #fff;
+		color: var(--akro-panel);
 	}
 
 	.akro-partner-inner {
@@ -4395,12 +4463,13 @@
 	}
 
 	.akro-partner .akro-label {
-		color: #8fd0c0;
+		color: var(--akro-warm);
+		font-size: 0.94em;
 	}
 
 	.akro-partner .button.primary {
-		background: #fff;
-		color: #13231f !important;
+		background: var(--akro-panel);
+		color: var(--akro-charcoal) !important;
 	}
 
 	.akro-partner-list {
@@ -4420,6 +4489,7 @@
 
 	.akro-partner-list li:before {
 		content: "→";
+		color: var(--akro-sage);
 		font-weight: 700;
 		left: 0;
 		position: absolute;
@@ -4431,10 +4501,19 @@
 	}
 
 	.akro-supporters {
-		background: #fff;
-		border-bottom: solid 1px #e5e5e5;
+		background: var(--akro-panel-soft);
+		border-bottom: solid 1px var(--akro-line);
 		padding: 3em 2em;
 		text-align: center;
+	}
+
+	#footer {
+		background: var(--akro-page);
+		color: var(--akro-muted);
+	}
+
+	#footer a {
+		color: var(--akro-deep-green);
 	}
 
 	.akro-logo-row {
