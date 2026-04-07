@@ -32,7 +32,7 @@ For the simplest setup:
 The project site will be available at:
 
 ```text
-https://ben-williams-ai.github.io/REPOSITORY_NAME/
+https://ben-williams-ai.github.io/akropora/
 ```
 
 Because links and assets are relative, the same files should work locally, under the GitHub Pages repo subpath, and later with a custom domain.
