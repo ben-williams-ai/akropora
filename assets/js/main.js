@@ -81,4 +81,41 @@
 
 		}
 
+	// Track when the page has moved beyond the hero edge.
+		var updateScrollState = function() {
+			$body.toggleClass('akro-has-scrolled', $window.scrollTop() > 24);
+		};
+
+		$window.on('load scroll resize', updateScrollState);
+		updateScrollState();
+
+	// Akropora reveal-on-scroll animations.
+		if ('IntersectionObserver' in window) {
+
+			var revealObserver = new IntersectionObserver(function(entries) {
+
+				entries.forEach(function(entry) {
+
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						revealObserver.unobserve(entry.target);
+					}
+
+				});
+
+			}, {
+				threshold: 0.16
+			});
+
+			document.querySelectorAll('.akro-reveal').forEach(function(element) {
+				revealObserver.observe(element);
+			});
+
+		}
+		else {
+			document.querySelectorAll('.akro-reveal').forEach(function(element) {
+				element.classList.add('is-visible');
+			});
+		}
+
 })(jQuery);
