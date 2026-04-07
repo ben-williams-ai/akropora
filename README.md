@@ -1,6 +1,6 @@
 # Akropora Website
 
-A simple one-page website for Akropora, built with plain HTML and CSS so it is easy to edit in VS Code and publish with GitHub Pages.
+A simple one-page website for Akropora, built from the HTML5 UP Alpha static template so it is easy to edit in VS Code and publish with GitHub Pages.
 
 Live site: https://ben-williams-ai.github.io/akropora/
 
@@ -20,7 +20,7 @@ http://localhost:8000
 
 Keep the terminal window open while you are working. After editing a file, refresh the browser to see the change.
 
-To preveiw mobile view in Chrome:
+To preview mobile view in Chrome:
 
 1. Open `http://localhost:8000`
 2. Right-click the page and choose `Inspect`
@@ -36,7 +36,9 @@ akropora/
 ├── index.html              The actual webpage content: headings, sections, links, and text.
 ├── assets/
 │   └── css/
-│       └── styles.css      The visual design: layout, colours, spacing, fonts, and mobile rules.
+│       └── main.css        The main template stylesheet: layout, colours, spacing, and mobile rules.
+├── images/                 Template images used by the page.
+├── vendor/                 Unpacked copy of the original HTML5 UP Alpha template for reference.
 ├── .nojekyll               Tells GitHub Pages to serve the files exactly as they are.
 ├── .gitignore              Tells Git which local files not to track.
 ├── html5up-alpha.zip       A downloaded template kept only as reference.
@@ -46,8 +48,8 @@ akropora/
 ## Editing Basics
 
 - Edit `index.html` when you want to change the words, sections, links, or page structure.
-- Edit `assets/css/styles.css` when you want to change how the site looks.
-- Use relative paths like `assets/css/styles.css` so the site works both locally and on GitHub Pages under `/akropora/`.
+- Edit `assets/css/main.css` when you want to change how the site looks.
+- Use relative paths like `assets/css/main.css` so the site works both locally and on GitHub Pages under `/akropora/`.
 - Do not add a framework unless the site becomes too complex for plain HTML and CSS.
 
 ## Publishing
