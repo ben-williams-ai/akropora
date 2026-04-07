@@ -1,42 +1,55 @@
-# Akropora startup site
+# Akropora Website
 
-A plain HTML/CSS one-page startup landing page designed for simple editing in VS Code and straightforward GitHub Pages deployment.
+A simple one-page website for Akropora, built with plain HTML and CSS so it is easy to edit in VS Code and publish with GitHub Pages.
 
-## Stack
+Live site: https://ben-williams-ai.github.io/akropora/
 
-- `index.html` for the page content
-- `assets/css/styles.css` for all styling
-- No build step and no framework
-- Relative asset paths so the site works locally, on a GitHub Pages project URL, and later behind a custom domain
+## How To View It Locally
 
-## Local development
-
-Open the folder in VS Code and use the Live Server extension, or run:
+From this folder, run:
 
 ```sh
 python3 -m http.server 8000
 ```
 
-Then open `http://localhost:8000`.
-
-## GitHub Pages deployment
-
-Create a private GitHub repository, push this folder, then enable Pages from `Settings -> Pages`.
-
-For the simplest setup:
-
-- Source: `Deploy from a branch`
-- Branch: `main`
-- Folder: `/root`
-
-The project site will be available at:
+Then open:
 
 ```text
-https://ben-williams-ai.github.io/akropora/
+http://localhost:8000
 ```
 
-Because links and assets are relative, the same files should work locally, under the GitHub Pages repo subpath, and later with a custom domain.
+Keep the terminal window open while you are working. After editing a file, refresh the browser to see the change.
 
-## Template note
+To preveiw mobile view in Chrome:
 
-`html5up-alpha.zip` contains the HTML5 UP Alpha template. It is a static template with jQuery helpers, Sass sources, Font Awesome, and multiple demo pages. For this site, the cleaner approach is to use it as reference only and keep the implementation smaller.
+1. Open `http://localhost:8000`
+2. Right-click the page and choose `Inspect`
+3. Click the phone/tablet icon in the developer tools
+4. Pick a phone size such as `iPhone 12 Pro` or drag the page narrower
+
+Build for both desktop and mobile as we go: keep text short, avoid layouts that only work at one screen size, use flexible sections, and check the page at both phone and desktop sizes after each meaningful design change.
+
+## Project Map
+
+```text
+akropora/
+├── index.html              The actual webpage content: headings, sections, links, and text.
+├── assets/
+│   └── css/
+│       └── styles.css      The visual design: layout, colours, spacing, fonts, and mobile rules.
+├── .nojekyll               Tells GitHub Pages to serve the files exactly as they are.
+├── .gitignore              Tells Git which local files not to track.
+├── html5up-alpha.zip       A downloaded template kept only as reference.
+└── README.md               This guide.
+```
+
+## Editing Basics
+
+- Edit `index.html` when you want to change the words, sections, links, or page structure.
+- Edit `assets/css/styles.css` when you want to change how the site looks.
+- Use relative paths like `assets/css/styles.css` so the site works both locally and on GitHub Pages under `/akropora/`.
+- Do not add a framework unless the site becomes too complex for plain HTML and CSS.
+
+## Publishing
+
+When the local version looks good, commit and push the changes. GitHub Pages should update the live site shortly after the push.
