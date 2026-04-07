@@ -104,6 +104,7 @@
 				});
 
 			}, {
+				rootMargin: '0px 0px -12% 0px',
 				threshold: 0.16
 			});
 
