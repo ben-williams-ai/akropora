@@ -4235,6 +4235,12 @@
 		margin: 0;
 	}
 
+	.akro-split-heading {
+		font-style: italic;
+		font-weight: 300 !important;
+		line-height: 1.08em;
+	}
+
 	.akro-intro-grid {
 		display: grid;
 		gap: 0;
@@ -4295,12 +4301,25 @@
 	}
 
 	.akro-section > header.major {
-		margin-bottom: 2.5em;
+		margin-bottom: 2em;
 		text-align: center;
 	}
 
 	.akro-section > header.major p {
 		color: var(--akro-muted);
+		margin-top: 0.9em;
+		padding-top: 0.9em;
+	}
+
+	#demos > header.major {
+		margin-bottom: 1.2em;
+		padding: 0;
+	}
+
+	#demos > header.major p {
+		border-top: 0;
+		margin: 0.25em 0 0 0;
+		padding: 0;
 	}
 
 	.akro-demo-grid {
@@ -4449,6 +4468,10 @@
 		color: var(--akro-panel);
 	}
 
+	.akro-partner h2 + p {
+		margin-bottom: 0.9em;
+	}
+
 	.akro-partner h2 {
 		color: var(--akro-panel);
 	}
@@ -4475,7 +4498,7 @@
 	.akro-partner-list {
 		display: inline-block;
 		list-style: none;
-		margin: 2em auto;
+		margin: 0 auto 1.1em auto;
 		max-width: 42em;
 		padding: 0;
 		text-align: left;
@@ -4507,13 +4530,22 @@
 		text-align: center;
 	}
 
+	.akro-supporters .akro-label {
+		color: var(--akro-warm);
+	}
+
 	#footer {
 		background: var(--akro-page);
 		color: var(--akro-muted);
+		padding: 1.5em 0 1.75em 0;
 	}
 
 	#footer a {
 		color: var(--akro-deep-green);
+	}
+
+	#footer .copyright {
+		margin: 0;
 	}
 
 	.akro-logo-row {

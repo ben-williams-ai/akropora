@@ -62,6 +62,7 @@ When the local version looks good, commit and push the changes. GitHub Pages sho
 ## TODOs
 
 - Replace `hello@example.com` with the real public Akropora contact email.
+- add full screen option for vids
 - Replace placeholder demo links with live Gaussian splat and video demo URLs.
 - Add the missing video for the `Inject human input` demo.
 - Replace temporary demo card images with real preview images or posters.
