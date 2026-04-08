@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Video walkthrough of an interactive 3D spatial twin of a restored coral reef."
+    />
+    <title>Reef Restoration Video | Akropora</title>
+    <style>
+      :root {
+        --akro-charcoal: #13231f;
+        --akro-ink: #4f5552;
+        --akro-line: #dfe4e1;
+        --akro-moss: #5f7f6f;
+        --akro-panel: #fff;
+        --akro-page: #f3f4f3;
+      }
+
+      body {
+        background: var(--akro-page);
+        color: var(--akro-ink);
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+      }
+
+      .akro-video-page {
+        margin: 0 auto;
+        max-width: 64rem;
+        padding: 3rem 1.5rem;
+      }
+
+      .akro-video-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        margin-bottom: 1.5rem;
+      }
+
+      .akro-button {
+        background: var(--akro-charcoal);
+        border-radius: 999px;
+        color: #fff;
+        font-weight: 700;
+        padding: 0.85rem 1.2rem;
+        text-decoration: none;
+      }
+
+      .akro-video-frame {
+        background: #000;
+        border-radius: 6px;
+        box-shadow: 0 1em 2.5em rgba(32, 34, 36, 0.12);
+        overflow: hidden;
+      }
+
+      .akro-video-frame video {
+        display: block;
+        width: 100%;
+      }
+
+      .akro-video-info {
+        background: var(--akro-panel);
+        border: 1px solid var(--akro-line);
+        border-radius: 6px;
+        box-shadow: 0 0.9em 2em rgba(32, 34, 36, 0.06);
+        margin-top: 1.5rem;
+        padding: 2rem;
+      }
+
+      .akro-video-info h1 {
+        color: var(--akro-charcoal);
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        line-height: 1.1;
+        margin: 0 0 1rem 0;
+      }
+
+      .akro-video-info p {
+        font-size: 1.08rem;
+        line-height: 1.7;
+        margin: 0 0 1rem 0;
+      }
+
+      .akro-video-info a {
+        color: var(--akro-moss);
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="akro-video-page">
+      <nav class="akro-video-nav" aria-label="Video page navigation">
+        <a class="akro-button" href="../../#demos">Back to demos</a>
+        <a class="akro-button" href="../../splats/reef-restoration/">View interactive twin</a>
+      </nav>
+
+      <div class="akro-video-frame">
+        <video controls poster="../../images/demos/reef-restoration.png">
+          <source src="../../assets/videos/reef-restoration.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <section class="akro-video-info">
+        <h1>Reef restoration flythrough</h1>
+        <p>
+          Video walkthrough of a precise spatial twin of a 20x30m area of coral
+          reef in Indonesia restored by Mars (buildingcoral.com).
+        </p>
+        <p>
+          For the fully interactive version,
+          <a href="../../splats/reef-restoration/">open the Gaussian splat twin</a>.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

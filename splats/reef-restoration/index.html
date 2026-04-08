@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive 3D spatial twin of a restored coral reef in Indonesia."
+    />
+    <title>Reef Restoration Spatial Twin | Akropora</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background: #101814;
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: hidden;
+      }
+
+      .akro-viewer {
+        height: 100%;
+        inset: 0;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+      }
+
+      .akro-viewer iframe {
+        border: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .akro-viewer-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        position: fixed;
+        right: 1rem;
+        top: 1rem;
+        z-index: 10;
+      }
+
+      .akro-info-control {
+        position: relative;
+      }
+
+      .akro-control {
+        align-items: center;
+        background: rgba(10, 16, 13, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 999px;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 0.95rem;
+        font-weight: 700;
+        font-family: inherit;
+        min-height: 3rem;
+        padding: 0 1.15rem;
+        text-decoration: none;
+      }
+
+      .akro-control:hover,
+      .akro-control:focus {
+        background: rgba(10, 16, 13, 0.9);
+      }
+
+      .akro-info-tooltip {
+        background: rgba(10, 16, 13, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.86);
+        line-height: 1.55;
+        max-width: min(32rem, calc(100vw - 2rem));
+        opacity: 0;
+        padding: 1rem 1.25rem;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: calc(100% + 0.75rem);
+        transition: opacity 0.2s ease;
+        width: min(32rem, calc(100vw - 2rem));
+      }
+
+      .akro-info-control:hover .akro-info-tooltip,
+      .akro-info-control:focus-within .akro-info-tooltip {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .akro-info-tooltip p {
+        margin: 0 0 1rem 0;
+      }
+
+      .akro-info-tooltip p:last-child {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 736px) {
+        .akro-viewer-controls {
+          gap: 0.5rem;
+        }
+
+        .akro-control {
+          font-size: 0.85rem;
+          min-height: 2.65rem;
+          padding: 0 0.9rem;
+        }
+
+        .akro-info-tooltip {
+          font-size: 0.85rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="akro-viewer">
+      <iframe
+        src="https://superspl.at/s?id=392787d3&amp;autoplay=false"
+        allow="fullscreen; xr-spatial-tracking"
+        loading="eager"
+        title="Reef restoration interactive 3D spatial twin"
+      ></iframe>
+    </div>
+
+    <nav class="akro-viewer-controls" aria-label="Viewer controls">
+      <a class="akro-control" href="../../#demos">Back to demos</a>
+      <a class="akro-control" href="../../videos/reef-restoration/">Watch video</a>
+      <div class="akro-info-control">
+        <button class="akro-control" type="button">Info</button>
+        <div class="akro-info-tooltip">
+          <p>
+            Click and hold left mouse button to rotate, right mouse button to pan,
+            scroll to zoom, double click to select focal point.
+          </p>
+          <p>
+            This demo shows a precise spatial twin of a 20x30m area of coral reef
+            in Indonesia restored by Mars (buildingcoral.com). The reef is
+            approximately 3 years post restoration. This twin provides a tangible
+            digital asset to evidence and explore the restoration progress.
+          </p>
+          <p>
+            Data courtesy of: J.Stratford, B.Williams, A. Dwiyanto, the Mars Coral
+            Restoration Project Monitoring Team, T.B.Razak, and T.A.C.Lamont.
+          </p>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>

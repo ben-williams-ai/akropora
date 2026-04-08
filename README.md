@@ -39,6 +39,9 @@ akropora/
 │       └── main.css        The main template stylesheet: layout, colours, spacing, and mobile rules.
 │   └── videos/             Website videos, such as hero demos and product clips.
 ├── images/                 Images and logos used by the page.
+│   └── demos/              Preview images for demo cards.
+├── splats/                 Fullscreen pages that embed interactive Gaussian splat demos.
+├── videos/                 Standalone pages for video fallbacks.
 ├── docs/                   Notes and parked copy that may be reused later.
 ├── vendor/                 Unpacked copy of the original HTML5 UP Alpha template for reference.
 ├── .nojekyll               Tells GitHub Pages to serve the files exactly as they are.
@@ -63,7 +66,7 @@ When the local version looks good, commit and push the changes. GitHub Pages sho
 
 - Replace `hello@example.com` with the real public Akropora contact email.
 - add full screen option for vids
-- Replace placeholder demo links with live Gaussian splat and video demo URLs.
+- Replace remaining placeholder demo links with live Gaussian splat and video demo URLs.
 - Add the missing video for the `Inject human input` demo.
 - Replace temporary demo card images with real preview images or posters.
 - Add in calendly link to book meetings

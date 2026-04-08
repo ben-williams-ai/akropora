@@ -4334,6 +4334,24 @@
 		border-radius: 6px;
 		box-shadow: 0 0.9em 2em rgba(32, 34, 36, 0.06);
 		overflow: hidden;
+		position: relative;
+	}
+
+	.akro-clickable-card {
+		transition: box-shadow 0.2s ease, transform 0.2s ease;
+	}
+
+	.akro-clickable-card:hover,
+	.akro-clickable-card:focus-within {
+		box-shadow: 0 1.2em 2.4em rgba(32, 34, 36, 0.12);
+		transform: translateY(-0.35em);
+	}
+
+	.akro-card-cover {
+		border-bottom: 0;
+		inset: 0;
+		position: absolute;
+		z-index: 2;
 	}
 
 	.akro-demo-card .image.featured {
@@ -4351,6 +4369,8 @@
 
 	.akro-demo-content {
 		padding: 2em;
+		position: relative;
+		z-index: 3;
 	}
 
 	.akro-demo-content h3 {
@@ -4376,8 +4396,32 @@
 	.akro-card-link {
 		border-bottom: 0;
 		color: var(--akro-deep-green);
+		display: block;
 		font-size: 1.05em;
 		font-weight: 700;
+		position: relative;
+		text-align: center;
+		z-index: 4;
+	}
+
+	.akro-card-mobile-link {
+		border-bottom: 0;
+		color: #8a8a8a;
+		display: block;
+		font-size: 0.9em;
+		margin: 0.45em auto 0 auto;
+		position: relative;
+		text-align: center;
+		width: fit-content;
+		z-index: 4;
+	}
+
+	.akro-card-mobile-link span {
+		border-bottom: solid 1px currentColor;
+	}
+
+	.akro-card-mobile-link:hover {
+		color: var(--akro-deep-green);
 	}
 
 	.akro-demo-content .akro-label {
@@ -4385,7 +4429,7 @@
 		font-size: 0.86em;
 	}
 
-	.akro-card-link:after {
+	.akro-demo-card:not(.akro-clickable-card) .akro-card-link:after {
 		content: " →";
 	}
 
