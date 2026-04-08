@@ -144,4 +144,55 @@
 			});
 		})();
 
+	// Homepage video fullscreen controls.
+		(function() {
+			var fullscreenButtons = document.querySelectorAll('.akro-video-fullscreen');
+
+			if (!fullscreenButtons.length) {
+				return;
+			}
+
+			var openVideoFullscreen = function(videoElement, containerElement) {
+				if (!videoElement) {
+					return;
+				}
+
+				if (videoElement.requestFullscreen) {
+					videoElement.requestFullscreen().catch(function() {});
+					return;
+				}
+
+				if (containerElement && containerElement.requestFullscreen) {
+					containerElement.requestFullscreen().catch(function() {});
+					return;
+				}
+
+				if (videoElement.webkitEnterFullscreen) {
+					videoElement.webkitEnterFullscreen();
+					return;
+				}
+
+				if (videoElement.webkitRequestFullscreen) {
+					videoElement.webkitRequestFullscreen();
+					return;
+				}
+
+				if (containerElement && containerElement.webkitRequestFullscreen) {
+					containerElement.webkitRequestFullscreen();
+				}
+			};
+
+			fullscreenButtons.forEach(function(button) {
+				button.addEventListener('click', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
+
+					var videoShell = button.closest('.akro-video-shell');
+					var video = videoShell ? videoShell.querySelector('video') : null;
+
+					openVideoFullscreen(video, videoShell);
+				});
+			});
+		})();
+
 })(jQuery);

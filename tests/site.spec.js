@@ -69,6 +69,16 @@ test("home page loads core sections", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /We are looking for founding partners/i })).toBeVisible();
 });
 
+test("homepage videos expose fullscreen controls", async ({ page }) => {
+  await gotoStable(page);
+
+  const fullscreenButtons = page.locator(".akro-video-fullscreen");
+  await expect(fullscreenButtons).toHaveCount(3);
+  await expect(fullscreenButtons.nth(0)).toHaveAttribute("aria-label", /hero video fullscreen/i);
+  await expect(fullscreenButtons.nth(1)).toHaveAttribute("aria-label", /natural language demo video fullscreen/i);
+  await expect(fullscreenButtons.nth(2)).toHaveAttribute("aria-label", /rapid classifier development demo video fullscreen/i);
+});
+
 test("navigation matches desktop and mobile breakpoints", async ({ page }, testInfo) => {
   await gotoStable(page);
 
@@ -156,7 +166,7 @@ test("get in touch opens an in-page contact modal", async ({ page }) => {
 
   const modal = page.locator("#contact-modal");
   await expect(modal).toBeVisible();
-  await expect(modal.getByText("Email our founder directly at")).toBeVisible();
+  await expect(modal.getByText("Email our founder directly:")).toBeVisible();
   await expect(modal.getByRole("link", { name: "ben@akropora.com" })).toHaveAttribute(
     "href",
     "mailto:ben@akropora.com?subject=Akropora%20founding%20partner"

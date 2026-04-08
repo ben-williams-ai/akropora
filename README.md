@@ -92,4 +92,3 @@ This repo has a `CNAME` file for `akropora.com`. To finish the setup, add `akrop
 - add full screen option for vids
 - Replace remaining placeholder demo links with live Gaussian splat and video demo URLs.
 - check how it looks on mobile
-- on github > settings > pages > custom domain - try to enable https + see if domain check passed
