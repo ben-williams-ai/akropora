@@ -3915,11 +3915,19 @@
 	}
 
 	html {
+		background: var(--akro-page);
+		overflow-x: hidden;
 		scroll-behavior: smooth;
 	}
 
 	body {
 		background: var(--akro-page);
+		overflow-x: hidden;
+	}
+
+	#page-wrapper {
+		max-width: 100%;
+		overflow-x: hidden;
 	}
 
 	body, input, select, textarea {
@@ -4642,6 +4650,18 @@
 			padding: 0;
 		}
 
+		.akro-intro-grid {
+			gap: 2.6em;
+		}
+
+	}
+
+	@media screen and (max-width: 840px) {
+
+		#header {
+			display: none !important;
+		}
+
 	}
 
 	@media screen and (max-width: 736px) {
@@ -4650,8 +4670,85 @@
 			font-size: 14pt;
 		}
 
+		#navButton {
+			height: 4em;
+			width: 4em;
+		}
+
+		#navButton .toggle {
+			width: 4em;
+		}
+
+		#banner {
+			padding-left: 1em;
+			padding-right: 1em;
+		}
+
+		#banner .hero-inner {
+			max-width: 100%;
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		#banner .hero-copy {
+			max-width: 100%;
+		}
+
+		#banner h2 {
+			font-size: 2em;
+			overflow-wrap: normal;
+		}
+
+		body.landing #banner .hero-capabilities li {
+			font-size: 1.2rem !important;
+		}
+
+		#banner .actions {
+			flex-direction: column;
+			margin-left: 0;
+			width: 100%;
+		}
+
+		#banner .actions li {
+			padding: 1em 0 0 0;
+			width: 100%;
+		}
+
+		#banner .actions li:first-child {
+			padding-top: 0;
+		}
+
+		#banner .actions li > * {
+			margin: 0 !important;
+			width: 100%;
+		}
+
+		#main.container.large {
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.akro-intro {
+			margin-left: 1em;
+			margin-right: 1em;
+			width: auto;
+		}
+
+		.akro-intro header {
+			margin-bottom: 2.25em;
+		}
+
 		.akro-section {
-			padding: 1em 0 3em 0;
+			padding: 1.5em 1.25em 3em 1.25em;
+		}
+
+		.akro-service-content {
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.akro-service-list li {
+			padding-left: 1.2em;
 		}
 
 		.akro-demo-content,
@@ -4660,7 +4757,22 @@
 		}
 
 		.akro-partner {
+			overflow: hidden;
 			padding: 4em 1.25em;
+		}
+
+		.akro-partner-inner,
+		.akro-partner-list {
+			max-width: 100%;
+			width: 100%;
+		}
+
+		.akro-partner-list {
+			display: block;
+		}
+
+		.akro-partner-list li {
+			padding-left: 1.2em;
 		}
 
 		.akro-logo-row {
