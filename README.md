@@ -50,6 +50,24 @@ akropora/
 └── README.md               This guide.
 ```
 
+## Tests
+
+The site has Playwright smoke tests for desktop and mobile layouts.
+
+First install the test runner:
+
+```sh
+npm install
+```
+
+Then run:
+
+```sh
+npm test
+```
+
+The tests start a local server automatically and check that key sections load, local links and media resolve, the desktop/mobile navigation behaves correctly, the mobile layout does not overflow sideways, and the reef splat/video fallback pages still work.
+
 ## Editing Basics
 
 - Edit `index.html` when you want to change the words, sections, links, or page structure.
