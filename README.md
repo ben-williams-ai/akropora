@@ -4,6 +4,8 @@ A simple one-page website for Akropora, built from the HTML5 UP Alpha static tem
 
 Live site: https://ben-williams-ai.github.io/akropora/
 
+Planned custom domain: https://akropora.com/
+
 ## How To View It Locally
 
 From this folder, run:
@@ -44,6 +46,7 @@ akropora/
 ├── videos/                 Standalone pages for video fallbacks.
 ├── docs/                   Notes and parked copy that may be reused later.
 ├── vendor/                 Unpacked copy of the original HTML5 UP Alpha template for reference.
+├── CNAME                   Tells GitHub Pages to use akropora.com as the custom domain.
 ├── .nojekyll               Tells GitHub Pages to serve the files exactly as they are.
 ├── .gitignore              Tells Git which local files not to track.
 ├── html5up-alpha.zip       A downloaded template kept only as reference.
@@ -79,6 +82,10 @@ The tests start a local server automatically and check that key sections load, l
 ## Publishing
 
 When the local version looks good, commit and push the changes. GitHub Pages should update the live site shortly after the push.
+
+## Custom Domain
+
+This repo has a `CNAME` file for `akropora.com`. To finish the setup, add `akropora.com` as the custom domain in the repo's GitHub Pages settings, then point the domain's DNS records at GitHub Pages in Namecheap.
 
 ## TODOs
 
