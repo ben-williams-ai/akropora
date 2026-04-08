@@ -119,4 +119,29 @@
 			});
 		}
 
+	// Contact modal.
+		(function() {
+			var modal = document.getElementById('contact-modal');
+			var openButton = document.querySelector('.akro-contact-open');
+
+			if (!modal || !openButton || typeof modal.showModal !== 'function') {
+				return;
+			}
+
+			openButton.addEventListener('click', function(event) {
+				event.preventDefault();
+				modal.showModal();
+			});
+
+			modal.querySelector('.akro-contact-close').addEventListener('click', function() {
+				modal.close();
+			});
+
+			modal.addEventListener('click', function(event) {
+				if (event.target === modal) {
+					modal.close();
+				}
+			});
+		})();
+
 })(jQuery);

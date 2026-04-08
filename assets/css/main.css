@@ -4571,9 +4571,69 @@
 		position: absolute;
 	}
 
-	.akro-contact-note {
-		font-size: 1.05em;
-		margin: 1em 0 0 0;
+	.akro-booking-link {
+		border-bottom: solid 1px currentColor;
+	}
+
+	.akro-contact-modal {
+		background: transparent;
+		border: 0;
+		color: var(--akro-copy);
+		max-width: min(38em, calc(100vw - 2em));
+		padding: 0;
+		width: 100%;
+	}
+
+	.akro-contact-modal::backdrop {
+		background: rgba(19, 35, 31, 0.72);
+	}
+
+	.akro-contact-modal-inner {
+		background: var(--akro-panel);
+		border: solid 1px var(--akro-line);
+		border-radius: 6px;
+		box-shadow: 0 1.6em 3.2em rgba(32, 34, 36, 0.22);
+		padding: 2.5em;
+		position: relative;
+		text-align: center;
+	}
+
+	.akro-contact-modal h2 {
+		color: var(--akro-ink);
+		font-size: 2em;
+		font-weight: 700;
+		margin-bottom: 0.65em;
+	}
+
+	.akro-contact-modal p {
+		font-size: 1.12em;
+		line-height: 1.7em;
+		margin-bottom: 0.9em;
+	}
+
+	.akro-contact-modal a {
+		color: var(--akro-deep-green);
+		font-weight: 700;
+	}
+
+	.akro-contact-close {
+		background: transparent;
+		border: 0;
+		box-shadow: none;
+		color: var(--akro-muted) !important;
+		cursor: pointer;
+		font-size: 1.8em;
+		height: auto;
+		line-height: 1;
+		padding: 0;
+		position: absolute;
+		right: 0.65em;
+		top: 0.55em;
+		width: auto;
+	}
+
+	.akro-contact-close:hover {
+		color: var(--akro-ink) !important;
 	}
 
 	.akro-supporters {
@@ -4773,6 +4833,14 @@
 
 		.akro-partner-list li {
 			padding-left: 1.2em;
+		}
+
+		.akro-contact-modal-inner {
+			padding: 2.25em 1.35em;
+		}
+
+		.akro-contact-modal h2 {
+			font-size: 1.7em;
 		}
 
 		.akro-logo-row {

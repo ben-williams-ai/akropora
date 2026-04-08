@@ -82,8 +82,6 @@ When the local version looks good, commit and push the changes. GitHub Pages sho
 
 ## TODOs
 
-- Replace `hello@example.com` with the real public Akropora contact email.
 - add full screen option for vids
 - Replace remaining placeholder demo links with live Gaussian splat and video demo URLs.
-- Add in calendly link to book meetings
 - check how it looks on mobile

@@ -149,6 +149,27 @@ test("local links and assets resolve", async ({ page }) => {
   }
 });
 
+test("get in touch opens an in-page contact modal", async ({ page }) => {
+  await gotoStable(page);
+
+  await page.getByRole("link", { name: "Get in touch" }).click();
+
+  const modal = page.locator("#contact-modal");
+  await expect(modal).toBeVisible();
+  await expect(modal.getByText("Email our founder directly at")).toBeVisible();
+  await expect(modal.getByRole("link", { name: "ben@akropora.com" })).toHaveAttribute(
+    "href",
+    "mailto:ben@akropora.com?subject=Akropora%20founding%20partner"
+  );
+  await expect(modal.getByRole("link", { name: "here" })).toHaveAttribute(
+    "href",
+    "https://calendar.app.google/uJyC9nwXoiPf7smP8"
+  );
+
+  await modal.getByRole("button", { name: "Close contact options" }).click();
+  await expect(modal).toBeHidden();
+});
+
 test("reef interactive twin and video fallback are reachable", async ({ page }) => {
   await gotoStable(page, "/splats/reef-restoration/");
 
