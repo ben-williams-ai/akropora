@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive 3D spatial twin of Jastrzębia Góra in Poland."
+    />
+    <title>Spatial Twins | Akropora</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background: #101814;
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: hidden;
+      }
+
+      .akro-viewer {
+        height: 100%;
+        inset: 0;
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+      }
+
+      .akro-viewer iframe {
+        border: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      .akro-startup-hint {
+        background: rgba(10, 16, 13, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 6px;
+        box-shadow: 0 1em 2.5em rgba(0, 0, 0, 0.2);
+        color: rgba(255, 255, 255, 0.92);
+        left: 50%;
+        line-height: 1.65;
+        max-width: min(42rem, calc(100vw - 2rem));
+        padding: 1.35rem 1.7rem;
+        pointer-events: none;
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        width: min(42rem, calc(100vw - 2rem));
+        z-index: 9;
+      }
+
+      .akro-startup-hint.is-hidden {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + 0.6rem));
+      }
+
+      .akro-startup-hint p {
+        font-size: 1.12rem;
+        margin: 0;
+      }
+
+      .akro-viewer-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        position: fixed;
+        right: 1rem;
+        top: 1rem;
+        z-index: 10;
+      }
+
+      .akro-info-control {
+        position: relative;
+      }
+
+      .akro-control {
+        align-items: center;
+        background: rgba(10, 16, 13, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 999px;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 700;
+        min-height: 3rem;
+        padding: 0 1.15rem;
+        text-decoration: none;
+      }
+
+      .akro-control:hover,
+      .akro-control:focus {
+        background: rgba(10, 16, 13, 0.9);
+      }
+
+      .akro-info-tooltip {
+        background: rgba(10, 16, 13, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.86);
+        line-height: 1.55;
+        max-width: min(32rem, calc(100vw - 2rem));
+        opacity: 0;
+        padding: 1rem 1.25rem;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: calc(100% + 0.75rem);
+        transition: opacity 0.2s ease;
+        width: min(32rem, calc(100vw - 2rem));
+      }
+
+      .akro-info-control:hover .akro-info-tooltip,
+      .akro-info-control:focus-within .akro-info-tooltip {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .akro-info-tooltip p {
+        margin: 0 0 1rem 0;
+      }
+
+      .akro-info-tooltip p:last-child {
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 736px) {
+        .akro-viewer-controls {
+          gap: 0.5rem;
+        }
+
+        .akro-control {
+          font-size: 0.85rem;
+          min-height: 2.65rem;
+          padding: 0 0.9rem;
+        }
+
+        .akro-info-tooltip {
+          font-size: 0.85rem;
+        }
+
+        .akro-startup-hint {
+          padding: 1.15rem 1.2rem;
+        }
+
+        .akro-startup-hint p {
+          font-size: 0.98rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="akro-viewer">
+      <iframe
+        src="https://superspl.at/s?id=b96f62cf"
+        allow="fullscreen; xr-spatial-tracking"
+        loading="eager"
+        title="Town spatial twins interactive 3D demo"
+      ></iframe>
+    </div>
+
+    <div class="akro-startup-hint" id="startup-hint" aria-live="polite">
+      <p>
+        Click and hold left mouse button to rotate, right mouse button to pan,
+        scroll to zoom, double click to select focal point.
+      </p>
+    </div>
+
+    <nav class="akro-viewer-controls" aria-label="Viewer controls">
+      <a class="akro-control" href="../../#demos">Back to demos</a>
+      <a class="akro-control" href="../../videos/spatial-twins/">Watch video</a>
+      <div class="akro-info-control">
+        <button class="akro-control" type="button">Info</button>
+        <div class="akro-info-tooltip">
+          <p>
+            Click and hold left mouse button to rotate, right mouse button to pan,
+            scroll to zoom, double click to select focal point.
+          </p>
+          <p>
+            This is a work in progress. We are adding an improved version soon,
+            with higher detail and the current missing patches filled in.
+          </p>
+          <p>
+            This demo shows a spatial twin of Jastrzębia Góra in Poland, built
+            from 20k drone images gathered in a single flight. The model spans
+            roughly 3km at its widest point.
+          </p>
+          <p>
+            Akropora produces high-quality Gaussian splats for large real-world
+            sites, making vast areas viewable directly in the browser.
+          </p>
+          <p>
+            Data courtesy of: Andrii Shramko, teleportour.com.
+          </p>
+        </div>
+      </div>
+    </nav>
+    <script>
+      window.setTimeout(function() {
+        var hint = document.getElementById("startup-hint");
+        if (hint) {
+          hint.classList.add("is-hidden");
+        }
+      }, 7000);
+    </script>
+  </body>
+</html>

@@ -36,6 +36,36 @@
         width: 100%;
       }
 
+      .akro-startup-hint {
+        background: rgba(10, 16, 13, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 6px;
+        box-shadow: 0 1em 2.5em rgba(0, 0, 0, 0.2);
+        color: rgba(255, 255, 255, 0.92);
+        left: 50%;
+        line-height: 1.65;
+        max-width: min(42rem, calc(100vw - 2rem));
+        padding: 1.35rem 1.7rem;
+        pointer-events: none;
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        width: min(42rem, calc(100vw - 2rem));
+        z-index: 9;
+      }
+
+      .akro-startup-hint.is-hidden {
+        opacity: 0;
+        transform: translate(-50%, calc(-50% + 0.6rem));
+      }
+
+      .akro-startup-hint p {
+        font-size: 1.12rem;
+        margin: 0;
+      }
+
       .akro-viewer-controls {
         display: flex;
         flex-wrap: wrap;
@@ -117,6 +147,14 @@
         .akro-info-tooltip {
           font-size: 0.85rem;
         }
+
+        .akro-startup-hint {
+          padding: 1.15rem 1.2rem;
+        }
+
+        .akro-startup-hint p {
+          font-size: 0.98rem;
+        }
       }
     </style>
   </head>
@@ -128,6 +166,13 @@
         loading="eager"
         title="Reef restoration interactive 3D spatial twin"
       ></iframe>
+    </div>
+
+    <div class="akro-startup-hint" id="startup-hint" aria-live="polite">
+      <p>
+        Click and hold left mouse button to rotate, right mouse button to pan,
+        scroll to zoom, double click to select focal point.
+      </p>
     </div>
 
     <nav class="akro-viewer-controls" aria-label="Viewer controls">
@@ -153,5 +198,13 @@
         </div>
       </div>
     </nav>
+    <script>
+      window.setTimeout(function() {
+        var hint = document.getElementById("startup-hint");
+        if (hint) {
+          hint.classList.add("is-hidden");
+        }
+      }, 7000);
+    </script>
   </body>
 </html>

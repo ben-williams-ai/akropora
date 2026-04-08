@@ -198,3 +198,22 @@ test("reef interactive twin and video fallback are reachable", async ({ page }) 
     "../../splats/reef-restoration/"
   );
 });
+
+test("town spatial twin and video fallback are reachable", async ({ page }) => {
+  await gotoStable(page, "/splats/spatial-twins/");
+
+  await expect(page.locator("iframe[title='Town spatial twins interactive 3D demo']")).toHaveAttribute(
+    "src",
+    /superspl\.at\/s\?id=b96f62cf/
+  );
+  await expect(page.getByRole("link", { name: "Back to demos" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Watch video" })).toHaveAttribute("href", "../../videos/spatial-twins/");
+  await expect(page.getByRole("button", { name: "Info" })).toBeVisible();
+
+  await gotoStable(page, "/videos/spatial-twins/");
+  await expect(page.locator("video source")).toHaveAttribute("src", "../../assets/videos/town-flythrough.mp4");
+  await expect(page.getByRole("link", { name: "View interactive twin" })).toHaveAttribute(
+    "href",
+    "../../splats/spatial-twins/"
+  );
+});
