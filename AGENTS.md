@@ -28,3 +28,13 @@ Keep the implementation deliberately small: static HTML, CSS, and the template's
 - `vendor/html5up-alpha/`: unpacked original template for reference.
 - `.nojekyll`: tells GitHub Pages to serve files as-is.
 - `README.md`: short guide for editing, previewing, and publishing the site.
+
+## Local Streamed-LOD Notes
+
+- There is now a hidden local streamed-LOD trial page at `splats/lod-trial-p20/`.
+- This was added to prove that PlayCanvas can load a packaged streamed-LOD asset locally using the repo's existing static server, without adding a build step or extra runtime dependency.
+- The packaged `p20` trial asset was copied into the repo on purpose. For this small test it is only about 26 MB, which keeps local testing simple and portable. We did not use a symlink because we want the route to behave like a normal hosted folder.
+- The viewer loads `lod-meta.json` plus the nearby chunk folders using relative paths. That is deliberate: it matches how the eventual hosted version will need to fetch files over normal URLs.
+- This local trial is only intended for a small development patch. It is not evidence that GitHub Pages is suitable for very large town-scale streamed-LOD assets.
+- If this route is extended later, prefer keeping it hidden from the homepage until the hosting and UX story are mature.
+- To run the local trial, from the repo root use `python3 -m http.server 8000` and open `http://localhost:8000/splats/lod-trial-p20/`.

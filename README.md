@@ -88,6 +88,8 @@ This is different from a normal single-file `.sog`. A `.sog` is one bundled file
 
 The current local trial keeps a small packaged asset inside the repo so we can test the viewer with the existing static server. For larger town-scale assets, GitHub Pages is unlikely to be the right long-term host, so the future online version will probably keep the viewer code and the large streamed files in different places.
 
+This viewer is still in development and has only been tested so far on one small trial patch (`p20`). It proves the local streamed-LOD path, but it is not yet a final production setup for larger scenes.
+
 ## Editing Basics
 
 - Edit `index.html` when you want to change the words, sections, links, or page structure.
