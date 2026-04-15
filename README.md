@@ -42,7 +42,7 @@ akropora/
 │   └── videos/             Website videos, such as hero demos and product clips.
 ├── images/                 Images and logos used by the page.
 │   └── demos/              Preview images for demo cards.
-├── splats/                 Fullscreen pages that embed interactive Gaussian splat demos.
+├── splats/                 Fullscreen Gaussian splat demo pages, including local viewer trials.
 ├── videos/                 Standalone pages for video fallbacks.
 ├── docs/                   Notes and parked copy that may be reused later.
 ├── vendor/                 Unpacked copy of the original HTML5 UP Alpha template for reference.
@@ -70,6 +70,23 @@ npm test
 ```
 
 The tests start a local server automatically and check that key sections load, local links and media resolve, the desktop/mobile navigation behaves correctly, the mobile layout does not overflow sideways, and the reef splat/video fallback pages still work.
+
+## Local Streamed-LOD Trial Viewer
+
+There is now a hidden local-only trial viewer at:
+
+```text
+http://localhost:8000/splats/lod-trial-p20/
+```
+
+It loads a copied-in PlayCanvas streamed-LOD asset for the `p20` trial patch using:
+
+- `lod-meta.json`
+- chunk folders such as `0_0/`, `0_1/`, `1_0/`
+
+This is different from a normal single-file `.sog`. A `.sog` is one bundled file, while streamed LOD uses `lod-meta.json` plus many nearby chunk files that are fetched on demand.
+
+The current local trial keeps a small packaged asset inside the repo so we can test the viewer with the existing static server. For larger town-scale assets, GitHub Pages is unlikely to be the right long-term host, so the future online version will probably keep the viewer code and the large streamed files in different places.
 
 ## Editing Basics
 

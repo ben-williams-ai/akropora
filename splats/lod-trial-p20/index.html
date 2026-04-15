@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Local streamed-LOD trial viewer for Akropora's p20 Gaussian splat patch."
+    />
+    <title>LOD Trial Patch Viewer | Akropora</title>
+    <link rel="stylesheet" href="./viewer.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "playcanvas": "https://cdn.jsdelivr.net/npm/playcanvas@2.17.2/+esm"
+        }
+      }
+    </script>
+  </head>
+  <body data-viewer-state="loading">
+    <div class="akro-viewer-shell">
+      <canvas class="akro-viewer-canvas" id="viewer-canvas"></canvas>
+
+      <div class="akro-status-card" aria-live="polite" id="status-card">
+        <p class="akro-status-eyebrow">Local streamed LOD trial</p>
+        <h1>Patch p20</h1>
+        <p class="akro-status-summary" id="status-summary">
+          Starting the PlayCanvas viewer and loading the streamed LOD asset.
+        </p>
+        <dl class="akro-status-meta">
+          <div>
+            <dt>Viewer state</dt>
+            <dd id="status-state">Loading</dd>
+          </div>
+          <div>
+            <dt>Asset path</dt>
+            <dd id="status-asset">./lod/lod-meta.json</dd>
+          </div>
+        </dl>
+      </div>
+
+      <nav class="akro-viewer-controls" aria-label="Viewer controls">
+        <a class="akro-control" href="../../#demos">Back to demos</a>
+        <div class="akro-info-control">
+          <button class="akro-control" type="button">Info</button>
+          <div class="akro-info-tooltip">
+            <p>
+              Drag with the left mouse button to orbit, use the right mouse button
+              to pan, use the middle mouse button or Alt + right mouse button to
+              dolly, and double click to choose a new focal point. On touch
+              devices, drag to orbit and use a two-finger pinch to zoom.
+            </p>
+            <p>
+              This page is intentionally hidden from the site navigation while we
+              validate the local streamed-LOD workflow. The future online version
+              may host the viewer code separately from larger LOD assets.
+            </p>
+            <p>
+              The asset loaded here is the packaged streamed-LOD output:
+              <code>lod-meta.json</code> plus chunk folders. It is not the same as a
+              single bundled <code>.sog</code> file.
+            </p>
+          </div>
+        </div>
+      </nav>
+
+      <p class="akro-startup-hint" id="startup-hint">
+        Loading can take a moment on first open. If anything goes wrong, the status
+        card will explain the failure rather than silently hanging. Double click a
+        visible point to refocus once the patch is ready.
+      </p>
+    </div>
+
+    <script type="module" src="./viewer.js"></script>
+  </body>
+</html>

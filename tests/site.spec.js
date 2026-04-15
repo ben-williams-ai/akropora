@@ -217,3 +217,36 @@ test("town spatial twin and video fallback are reachable", async ({ page }) => {
     "../../splats/spatial-twins/"
   );
 });
+
+test("local LOD trial viewer loads and reports ready", async ({ page }, testInfo) => {
+  await gotoStable(page, "/splats/lod-trial-p20/");
+
+  await expect(page).toHaveTitle(/LOD Trial Patch Viewer/);
+  await expect(page.locator("#viewer-canvas")).toBeVisible();
+  await expect(page.locator("#status-asset")).toHaveText("./lod/lod-meta.json");
+  await expect(page.locator("#status-state")).toHaveText("Ready", { timeout: 20_000 });
+  await expect(page.locator("#status-summary")).toContainText("loaded locally");
+
+  const responsePaths = [
+    "/splats/lod-trial-p20/lod/lod-meta.json",
+    "/splats/lod-trial-p20/lod/0_0/meta.json",
+    "/splats/lod-trial-p20/lod/3_0/meta.json"
+  ];
+
+  for (const path of responsePaths) {
+    const response = await page.request.get(path);
+    expect(response.status(), path).toBeLessThan(400);
+  }
+
+  if (testInfo.project.name === "mobile") {
+    await expectNoHorizontalOverflow(page);
+  }
+});
+
+test("local LOD trial viewer reports a clear error for a missing entry file", async ({ page }) => {
+  await gotoStable(page, "/splats/lod-trial-p20/?broken=1");
+
+  await expect(page.locator("#status-state")).toHaveText("Error", { timeout: 20_000 });
+  await expect(page.locator("#status-summary")).toContainText("Could not load the streamed LOD asset");
+  await expect(page.locator("#status-asset")).toHaveText("./lod/does-not-exist/lod-meta.json");
+});
