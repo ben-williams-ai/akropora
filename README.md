@@ -90,6 +90,16 @@ The current local trial keeps a small packaged asset inside the repo so we can t
 
 This viewer is still in development and has only been tested so far on one small trial patch (`p20`). It proves the local streamed-LOD path, but it is not yet a final production setup for larger scenes.
 
+TODO:
+- We have the local web app working for the small LOD patch.
+- Test the full town LOD package with the local web app.
+- Create a cloud bucket and upload only the final LOD asset: lod-meta.json plus chunk folders/files.
+- Give that bucket a public URL or custom domain, and configure CORS to allow your site origin. CORS is a browser security rule that I configure by saying my website is allowed to read from there and on the cloud provider by making the bucket public or attaching a custom domain and adding a cors policy for my site
+- Point the viewer at the remote lod-meta.json URL and test first with the small patch.
+- Then point it at the full town asset and test again.
+- Add or update the public link/button on the main site.
+- Monitor traffic and storage costs after launch.
+
 ## Editing Basics
 
 - Edit `index.html` when you want to change the words, sections, links, or page structure.
@@ -110,4 +120,3 @@ This repo has a `CNAME` file for `akropora.com`. To finish the setup, add `akrop
 
 - add full screen option for vids
 - Replace remaining placeholder demo links with live Gaussian splat and video demo URLs.
-- check how it looks on mobile
