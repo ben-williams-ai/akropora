@@ -4571,6 +4571,60 @@
 		position: absolute;
 	}
 
+	.akro-founder {
+		background: var(--akro-panel-soft);
+		border-bottom: solid 1px var(--akro-line);
+		padding: 4.5em 2em;
+	}
+
+	.akro-founder-inner {
+		align-items: center;
+		column-gap: 3.2em;
+		display: grid;
+		grid-template-columns: minmax(11em, 14em) minmax(0, 1fr);
+		margin: 0 auto;
+		max-width: 64em;
+	}
+
+	.akro-founder-photo-block {
+		text-align: center;
+	}
+
+	.akro-founder-photo {
+		border: solid 4px #ffffff;
+		border-radius: 50%;
+		box-shadow: 0 1.1em 2.4em rgba(32, 34, 36, 0.12);
+		display: block;
+		height: 13rem;
+		margin: 0 auto 1em auto;
+		object-fit: cover;
+		width: 13rem;
+	}
+
+	.akro-founder-name {
+		color: var(--akro-ink);
+		font-size: 1.02em;
+		font-weight: 700;
+		letter-spacing: 0.01em;
+		margin: 0;
+	}
+
+	.akro-founder-copy h2 {
+		margin-bottom: 0.55em;
+	}
+
+	.akro-founder-copy p {
+		color: var(--akro-copy);
+		font-size: 1.12em;
+		line-height: 1.85em;
+		margin-bottom: 0;
+	}
+
+	.akro-founder-copy a {
+		color: var(--akro-deep-green);
+		font-weight: 700;
+	}
+
 	.akro-booking-link {
 		border-bottom: solid 1px currentColor;
 	}
@@ -4743,7 +4797,8 @@
 
 		.akro-demo-grid,
 		.akro-intro-grid,
-		.akro-mini-grid {
+		.akro-mini-grid,
+		.akro-founder-inner {
 			grid-template-columns: 1fr;
 		}
 
@@ -4852,6 +4907,23 @@
 		.akro-service-content {
 			max-width: 100%;
 			width: 100%;
+		}
+
+		.akro-founder {
+			padding: 3.5em 1.25em;
+		}
+
+		.akro-founder-inner {
+			row-gap: 2em;
+		}
+
+		.akro-founder-copy {
+			text-align: left;
+		}
+
+		.akro-founder-photo {
+			height: 11rem;
+			width: 11rem;
 		}
 
 		.akro-service-list li {
