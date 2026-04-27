@@ -4598,6 +4598,7 @@
 		height: 13rem;
 		margin: 0 auto 1em auto;
 		object-fit: cover;
+		object-position: center 38%;
 		width: 13rem;
 	}
 
