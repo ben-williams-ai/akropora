@@ -7,6 +7,13 @@ const MIN_DISTANCE = 0.4;
 const MAX_DISTANCE = 500;
 const PICKER_SCALE = 0.5;
 const DAMPING_PER_SECOND = 0.008;
+const TOWN_LOD_BASE_DISTANCE = 160;
+const TOWN_LOD_MULTIPLIER = 2;
+const TOWN_LOD_UPDATE_ANGLE = 5;
+const TOWN_LOD_UPDATE_DISTANCE = 0.5;
+const TOWN_MIN_DISTANCE = 2.4;
+const TOWN_SPLAT_BUDGET = 3_000_000;
+const VIEWER_BUILD = "town-local-2026-05-14-no-picker-no-ids-webgl-check";
 
 const bodyElement = document.body;
 const canvasElement = document.getElementById("viewer-canvas");
@@ -43,6 +50,87 @@ function setStatus(state, summary) {
 function getSplatUrl() {
   const searchParams = new URLSearchParams(window.location.search);
   return searchParams.get("broken") === "1" ? BROKEN_SPLAT_URL : DEFAULT_SPLAT_URL;
+}
+
+/**
+ * Checks whether the browser can create a WebGL context before PlayCanvas starts.
+ *
+ * Chrome can temporarily lose WebGL after a GPU-process crash. When that happens
+ * PlayCanvas throws a short "WebGL not supported" error, but the useful fix is
+ * to restart Chrome or re-enable hardware acceleration.
+ *
+ * @return {boolean} True when WebGL is currently available.
+ */
+function isWebGLAvailable() {
+  const testCanvas = document.createElement("canvas");
+  const context =
+    testCanvas.getContext("webgl2") ||
+    testCanvas.getContext("webgl") ||
+    testCanvas.getContext("experimental-webgl");
+  return Boolean(context);
+}
+
+/**
+ * Reads streamed-LOD chunk metadata and derives practical viewer bounds.
+ *
+ * The engine resource AABB can be too conservative for this large streamed
+ * asset, which leaves the town as a tiny speck after initial framing. The
+ * coarsest LOD has only a few chunks, so it is cheap to read and gives us a
+ * stable startup camera frame without waiting for every high-detail chunk.
+ *
+ * @param {string} splatUrl URL to the lod-meta.json file.
+ * @return {!Promise<?pc.BoundingBox>} Derived bounds, or null if unavailable.
+ */
+async function getStreamedLodBounds(splatUrl) {
+  const entryUrl = new URL(splatUrl, window.location.href);
+  const response = await fetch(entryUrl);
+  if (!response.ok) {
+    return null;
+  }
+
+  const entry = await response.json();
+  const coarsestLevel = Math.max(0, Number(entry.lodLevels || 1) - 1);
+  const chunkFiles = (entry.filenames || []).filter((filename) => {
+    return filename.startsWith(`${coarsestLevel}_`) && filename.endsWith("/meta.json");
+  });
+  if (chunkFiles.length === 0) {
+    return null;
+  }
+
+  const mins = [Infinity, Infinity, Infinity];
+  const maxs = [-Infinity, -Infinity, -Infinity];
+  await Promise.all(
+    chunkFiles.map(async (filename) => {
+      const chunkUrl = new URL(filename, entryUrl);
+      const chunkResponse = await fetch(chunkUrl);
+      if (!chunkResponse.ok) {
+        return;
+      }
+
+      const chunk = await chunkResponse.json();
+      for (let axis = 0; axis < 3; axis += 1) {
+        mins[axis] = Math.min(mins[axis], chunk.means.mins[axis]);
+        maxs[axis] = Math.max(maxs[axis], chunk.means.maxs[axis]);
+      }
+    })
+  );
+
+  if (!mins.every(Number.isFinite) || !maxs.every(Number.isFinite)) {
+    return null;
+  }
+
+  const center = new pc.Vec3(
+    (mins[0] + maxs[0]) * 0.5,
+    (mins[1] + maxs[1]) * 0.5,
+    (mins[2] + maxs[2]) * 0.5
+  );
+  const halfExtents = new pc.Vec3(
+    Math.max((maxs[0] - mins[0]) * 0.5, MIN_DISTANCE),
+    Math.max((maxs[1] - mins[1]) * 0.5, MIN_DISTANCE),
+    Math.max((maxs[2] - mins[2]) * 0.5, MIN_DISTANCE)
+  );
+
+  return new pc.BoundingBox(center, halfExtents);
 }
 
 /**
@@ -94,7 +182,7 @@ class SuperSplatStyleController {
    *
    * @param {!pc.Entity} cameraEntity Camera entity.
    * @param {!HTMLCanvasElement} inputElement Canvas used for input.
-   * @param {function(number, number): Promise<void>} focusPicker Async focus picker.
+ * @param {function(number, number): void} focusPicker Focus callback.
    */
   constructor(cameraEntity, inputElement, focusPicker) {
     /** @private @const {!pc.Entity} */
@@ -103,7 +191,7 @@ class SuperSplatStyleController {
     this.camera = cameraEntity.camera;
     /** @private @const {!HTMLCanvasElement} */
     this.inputElement = inputElement;
-    /** @private @const {function(number, number): Promise<void>} */
+    /** @private @const {function(number, number): void} */
     this.focusPicker = focusPicker;
     /** @private {!pc.Vec3} */
     this.focus = new pc.Vec3();
@@ -121,12 +209,31 @@ class SuperSplatStyleController {
     this.distance = 12;
     /** @private {number} */
     this.targetDistance = 12;
+    /** @private {number} */
+    this.minDistance = MIN_DISTANCE;
     /** @private {?{mode: string, x: number, y: number}} */
     this.dragState = null;
     /** @private {?{distance: number, midpointX: number, midpointY: number}} */
     this.touchState = null;
 
     this.bindEvents();
+    this.applyCameraTransform();
+  }
+
+  /**
+   * Sets a scene-specific minimum camera distance.
+   *
+   * The full-town asset can overwhelm Chrome's GPU process if the camera is
+   * allowed inside very dense LOD0 chunks. Keeping a modest stand-off distance
+   * still permits close inspection while avoiding pathological near-camera
+   * splat expansion.
+   *
+   * @param {number} minDistance Minimum orbit distance.
+   */
+  setMinimumDistance(minDistance) {
+    this.minDistance = Math.max(minDistance, MIN_DISTANCE);
+    this.distance = Math.max(this.distance, this.minDistance);
+    this.targetDistance = Math.max(this.targetDistance, this.minDistance);
     this.applyCameraTransform();
   }
 
@@ -182,7 +289,7 @@ class SuperSplatStyleController {
     );
 
     this.inputElement.addEventListener("dblclick", (event) => {
-      void this.focusPicker(event.clientX, event.clientY);
+      this.focusPicker(event.clientX, event.clientY);
     });
 
     this.inputElement.addEventListener(
@@ -248,7 +355,7 @@ class SuperSplatStyleController {
     const radius = Math.max(boundingBox.halfExtents.length(), MIN_DISTANCE);
     const fieldOfViewRadians = pc.math.DEG_TO_RAD * this.camera.fov;
     const framedDistance = radius / Math.tan(fieldOfViewRadians * 0.5);
-    this.distance = clamp(framedDistance * 1.55, MIN_DISTANCE, MAX_DISTANCE);
+    this.distance = clamp(framedDistance * 1.55, this.minDistance, MAX_DISTANCE);
     this.targetDistance = this.distance;
     this.applyCameraTransform();
   }
@@ -333,7 +440,7 @@ class SuperSplatStyleController {
    */
   dolly(deltaY) {
     const zoomFactor = Math.exp(deltaY * 0.0015);
-    this.targetDistance = clamp(this.targetDistance * zoomFactor, MIN_DISTANCE, MAX_DISTANCE);
+    this.targetDistance = clamp(this.targetDistance * zoomFactor, this.minDistance, MAX_DISTANCE);
   }
 
   /**
@@ -377,6 +484,7 @@ class SuperSplatStyleController {
 async function main() {
   const splatUrl = getSplatUrl();
   statusAssetElement.textContent = splatUrl;
+  console.info(`Akropora LOD viewer build: ${VIEWER_BUILD}`);
 
   window.addEventListener("error", (event) => {
     if (bodyElement.dataset.viewerState === "ready") {
@@ -394,11 +502,32 @@ async function main() {
     setStatus("error", `Viewer bootstrap failed: ${String(event.reason)}`);
   });
 
-  const app = new pc.Application(canvasElement, {
-    elementInput: new pc.ElementInput(canvasElement),
-    mouse: new pc.Mouse(document.body),
-    touch: new pc.TouchDevice(document.body)
-  });
+  if (!isWebGLAvailable()) {
+    setStatus(
+      "error",
+      "WebGL is unavailable in this Chrome session. Restart Chrome, then reopen this local viewer. If it persists, check chrome://gpu and hardware acceleration."
+    );
+    return;
+  }
+
+  let app = null;
+  try {
+    app = new pc.Application(canvasElement, {
+      elementInput: new pc.ElementInput(canvasElement),
+      mouse: new pc.Mouse(document.body),
+      touch: new pc.TouchDevice(document.body)
+    });
+  } catch (error) {
+    if (String(error).includes("WebGL")) {
+      setStatus(
+        "error",
+        "PlayCanvas could not start WebGL. Restart Chrome after the earlier GPU crash, then reopen this local viewer."
+      );
+      return;
+    }
+
+    throw error;
+  }
 
   app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
   app.setCanvasResolution(pc.RESOLUTION_AUTO);
@@ -410,50 +539,32 @@ async function main() {
   window.addEventListener("resize", onResize);
 
   app.scene.gsplat.radialSorting = true;
-  app.scene.gsplat.lodUpdateAngle = 90;
-  app.scene.gsplat.enableIds = true;
+  app.scene.gsplat.lodUpdateAngle = TOWN_LOD_UPDATE_ANGLE;
+  app.scene.gsplat.lodUpdateDistance = TOWN_LOD_UPDATE_DISTANCE;
+  // ID rendering is only needed for picking. It can trigger an internal
+  // PlayCanvas camera-list path before the full-town scene is ready in Chrome,
+  // so keep it disabled for this stability-focused local viewer.
+  app.scene.gsplat.enableIds = false;
   app.scene.gsplat.alphaClip = 0.2;
   app.scene.gsplat.minPixelSize = 1;
+  app.scene.gsplat.splatBudget = TOWN_SPLAT_BUDGET;
 
   const cameraEntity = new pc.Entity("trial-camera");
   cameraEntity.addComponent("camera", {
     clearColor: new pc.Color(0.06, 0.09, 0.08),
     farClip: 5000,
     fov: 55,
-    nearClip: 0.05
+    nearClip: 0.2
   });
   app.root.addChild(cameraEntity);
 
-  const worldLayer = app.scene.layers.getLayerByName("World");
-  const picker = new pc.Picker(app, 1, 1, true);
   let controls = null;
-
-  const focusFromScreenPoint = async (clientX, clientY) => {
-    if (!controls || !worldLayer) {
-      return;
-    }
-
-    const canvasRect = canvasElement.getBoundingClientRect();
-    const localX = clientX - canvasRect.left;
-    const localY = clientY - canvasRect.top;
-    if (localX < 0 || localY < 0 || localX > canvasRect.width || localY > canvasRect.height) {
-      return;
-    }
-
-    picker.resize(
-      Math.max(1, Math.round(canvasRect.width * PICKER_SCALE)),
-      Math.max(1, Math.round(canvasRect.height * PICKER_SCALE))
-    );
-    picker.prepare(cameraEntity.camera, app.scene, [worldLayer]);
-
-    const worldPoint = await picker.getWorldPointAsync(localX * PICKER_SCALE, localY * PICKER_SCALE);
-    if (worldPoint) {
-      controls.setFocusPoint(worldPoint);
-      setStatus("ready", "Ready. The p20 streamed LOD patch is loaded locally.");
-    }
+  const focusFromScreenPoint = () => {
+    console.info("Double-click focus picking is disabled for this full-town stability test.");
   };
 
   controls = new SuperSplatStyleController(cameraEntity, canvasElement, focusFromScreenPoint);
+  controls.setMinimumDistance(TOWN_MIN_DISTANCE);
 
   app.on("update", (dt) => {
     if (controls) {
@@ -462,6 +573,7 @@ async function main() {
   });
 
   setStatus("loading", "Fetching the streamed LOD entry file and initial chunks.");
+  const metadataBoundsPromise = getStreamedLodBounds(splatUrl).catch(() => null);
   const asset = new pc.Asset("trial-lod", "gsplat", { url: splatUrl });
   app.assets.add(asset);
 
@@ -476,19 +588,20 @@ async function main() {
       unified: true
     });
     splatEntity.gsplat.highQualitySH = false;
-    splatEntity.gsplat.lodBaseDistance = 3;
-    splatEntity.gsplat.lodMultiplier = 2.2;
+    splatEntity.gsplat.lodBaseDistance = TOWN_LOD_BASE_DISTANCE;
+    splatEntity.gsplat.lodMultiplier = TOWN_LOD_MULTIPLIER;
     app.root.addChild(splatEntity);
 
-    window.setTimeout(() => {
-      const bounds = getBounds(splatEntity);
+    window.setTimeout(async () => {
+      const metadataBounds = await metadataBoundsPromise;
+      const bounds = metadataBounds || getBounds(splatEntity);
       if (bounds) {
         controls.frameBoundingBox(bounds);
       }
 
       setStatus(
         "ready",
-        "Ready. The p20 streamed LOD patch is loaded locally. Double click a visible point to move the focal point there."
+        "Ready. The full town streamed LOD asset is loaded locally. Double click a visible point to move the focal point there."
       );
     }, 0);
   });
