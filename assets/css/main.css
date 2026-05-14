@@ -4255,7 +4255,7 @@
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		margin: 0 auto;
 		max-width: 72em;
-		text-align: center;
+		text-align: left;
 	}
 
 	.akro-intro-grid article {
@@ -4277,6 +4277,23 @@
 
 	.akro-intro-grid p {
 		margin: 0;
+	}
+
+	.akro-intro-grid ul {
+		color: var(--akro-copy);
+		font-size: 1.16em;
+		line-height: 1.75em;
+		list-style: disc;
+		margin: 0;
+		padding-left: 1.25em;
+	}
+
+	.akro-intro-grid li {
+		padding-left: 0.15em;
+	}
+
+	.akro-intro-grid li + li {
+		margin-top: 0.65em;
 	}
 
 	.akro-intro p,
