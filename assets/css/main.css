@@ -4272,6 +4272,7 @@
 		font-weight: 700;
 		letter-spacing: 0.12em;
 		margin: 0 0 1.25em 0;
+		text-align: center;
 		text-transform: uppercase;
 	}
 
@@ -4282,18 +4283,32 @@
 	.akro-intro-grid ul {
 		color: var(--akro-copy);
 		font-size: 1.16em;
-		line-height: 1.75em;
-		list-style: disc;
+		line-height: 1.5em;
+		list-style: none;
 		margin: 0;
-		padding-left: 1.25em;
+		padding-left: 0;
 	}
 
 	.akro-intro-grid li {
-		padding-left: 0.15em;
+		padding-left: 1.35em;
+		position: relative;
 	}
 
 	.akro-intro-grid li + li {
-		margin-top: 0.65em;
+		margin-top: 0.75em;
+	}
+
+	.akro-intro-grid li::before {
+		border-right: solid 1.5px currentColor;
+		border-top: solid 1.5px currentColor;
+		content: "";
+		height: 0.42em;
+		left: 0;
+		opacity: 0.68;
+		position: absolute;
+		top: 0.52em;
+		transform: rotate(45deg) skew(-8deg, -8deg);
+		width: 0.42em;
 	}
 
 	.akro-intro p,
